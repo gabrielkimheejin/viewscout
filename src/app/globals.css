@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .animate-shimmer {
+    animation: shimmer 3s linear infinite;
+    background-size: 200% auto;
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 0% center;
+    }
+
+    to {
+      background-position: -200% center;
+    }
+  }
+
+  .glass-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-20deg) translateX(-150%);
+    animation: shine 3s infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      transform: skewX(-20deg) translateX(-150%);
+    }
+
+    20% {
+      transform: skewX(-20deg) translateX(100%);
+      /* Fast pass */
+    }
+
+    100% {
+      transform: skewX(-20deg) translateX(100%);
+      /* Wait */
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    /* White */
+    --foreground: 222 47% 11%;
+    /* Dark Navy/Black for text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 5 84% 55%;
+    /* Brand Red/Orange #ed3b2a */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    /* Light Gray for secondary backgrounds */
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 5 84% 55%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

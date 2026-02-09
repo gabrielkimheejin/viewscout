@@ -1,12 +1,10 @@
-
-
 import { LottieLoader } from "@/components/ui/lottie-loader";
 
 export default function Loading() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
-            <LottieLoader width={150} height={150} />
-            <p className="text-muted-foreground animate-pulse font-medium">데이터를 분석 중입니다...</p>
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
+            <LottieLoader width={160} height={160} />
+            <p className="mt-4 text-sm font-medium text-gray-500 animate-pulse">데이터를 분석 중입니다...</p>
         </div>
     );
 }

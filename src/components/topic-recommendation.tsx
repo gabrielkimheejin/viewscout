@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Loader2, Zap, Search, Lightbulb } from "lucide-react";
+import { Sparkles, Zap, Search, Lightbulb } from "lucide-react";
 import { generateContentIdeas } from "@/app/actions";
 import { VideoIdea } from "@/lib/api/gemini";
+import { LottieLoader } from "@/components/ui/lottie-loader";
 import { Badge } from "@/components/ui/badge";
 
 export function TopicRecommendation({ keyword, relatedKeywords = [], topVideoTitles = [] }: { keyword: string, relatedKeywords?: string[], topVideoTitles?: string[] }) {
@@ -82,7 +83,7 @@ export function TopicRecommendation({ keyword, relatedKeywords = [], topVideoTit
                             disabled={loading}
                             className="w-full py-4 flex items-center justify-center gap-2 text-base font-bold text-white bg-indigo-600 rounded-2xl hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 fill-white/20" />}
+                            {loading ? <LottieLoader width={28} height={28} /> : <Sparkles className="w-5 h-5 fill-white/20" />}
                             {loading ? "트렌드 분석 중..." : "AI 아이디어 추천받기"}
                         </button>
                     </div>

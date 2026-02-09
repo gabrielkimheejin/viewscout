@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { LottieLoader } from "@/components/ui/lottie-loader";
 import { Input } from "@/components/ui/input";
 import { analyzeVideoAction } from "./actions";
 import { VideoDiagnosticsResult } from "@/lib/video-diagnostics";
 import { VideoDiagnosisDashboard } from "@/components/video-diagnosis-dashboard";
-import { Youtube, Link as LinkIcon, Loader2, Sparkles } from "lucide-react";
+import { Youtube, Link as LinkIcon, Sparkles } from "lucide-react";
 
 // Video Diagnostics Page
 
@@ -62,7 +63,7 @@ export default function DiagnosticsPage() {
                     >
                         {isProcessing ? (
                             <>
-                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                <LottieLoader width={28} height={28} className="mr-2" />
                                 분석 중...
                             </>
                         ) : (
@@ -84,7 +85,7 @@ export default function DiagnosticsPage() {
             <div className="min-h-[400px]">
                 {isProcessing && (
                     <div className="h-[400px] flex flex-col items-center justify-center space-y-4 animate-in fade-in">
-                        <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                        <LottieLoader width={120} height={120} />
                         <p className="text-lg font-medium text-gray-600 animate-pulse">영상을 분석하고 있습니다...</p>
                         <p className="text-sm text-gray-400">대본 추출 중 • 키워드 트렌드 검색 중</p>
                     </div>

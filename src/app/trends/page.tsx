@@ -8,6 +8,7 @@ import { getTrendingKeywords, getTopVideosForKeyword } from "@/app/actions";
 import { TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { LottieLoader } from "@/components/ui/lottie-loader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -141,10 +142,9 @@ export default function TrendsPage() {
                     </div>
 
                     {loading ? (
-                        <div className="space-y-4">
-                            {[...Array(5)].map((_, i) => (
-                                <div key={i} className="h-16 bg-gray-200 animate-pulse rounded-lg" />
-                            ))}
+                        <div className="flex flex-col items-center justify-center py-20">
+                            <LottieLoader width={120} height={120} />
+                            <p className="mt-4 text-sm font-medium text-gray-400 animate-pulse">트렌드 데이터 불러오는 중...</p>
                         </div>
                     ) : error ? (
                         <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">

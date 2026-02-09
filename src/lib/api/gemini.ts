@@ -17,7 +17,11 @@ export async function generateVideoIdeas(
 ): Promise<VideoIdea[]> {
     if (!process.env.GEMINI_API_KEY) {
         console.warn("GEMINI_API_KEY is missing");
-        return fallbackIdeas(keyword);
+        return [
+            { type: "Viral Hit", title: "[ERROR] GEMINI_API_KEY가 설정되지 않음", reason: \`환경변수 목록: \${Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('API')).join(', ')}\` },
+            { type: "Search-Optimized", title: "환경변수 누락", reason: "Vercel 대시보드에서 GEMINI_API_KEY를 확인하세요" },
+            { type: "Creative Twist", title: "디버그", reason: "process.env.GEMINI_API_KEY is falsy" }
+        ];
     }
 
     try {
@@ -73,9 +77,14 @@ export async function generateVideoIdeas(
 
         return ideas.slice(0, 3);
 
-    } catch (error) {
-        console.error("Gemini Generation Error:", error);
-        return fallbackIdeas(keyword);
+    } catch (error: unknown) {
+        const errMsg = error instanceof Error ? error.message : String(error);
+        console.error("Gemini Generation Error:", errMsg);
+        return [
+            { type: "Viral Hit", title: `[ERROR] ${errMsg.slice(0, 80)}`, reason: `GEMINI_API_KEY exists: ${!!process.env.GEMINI_API_KEY}, key prefix: ${(process.env.GEMINI_API_KEY || '').slice(0, 10)}...` },
+            { type: "Search-Optimized", title: "Gemini API 호출 실패", reason: errMsg.slice(0, 200) },
+            { type: "Creative Twist", title: "디버그 정보", reason: \`model: gemini-3-flash-preview, env keys: \${Object.keys(process.env).filter(k => k.includes('GEMINI')).join(', ')}\` }
+        ];
     }
 }
 

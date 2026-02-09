@@ -1,4 +1,3 @@
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini API
@@ -17,8 +16,9 @@ export async function generateVideoIdeas(
 ): Promise<VideoIdea[]> {
     if (!process.env.GEMINI_API_KEY) {
         console.warn("GEMINI_API_KEY is missing");
+        const envKeys = Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('API')).join(', ');
         return [
-            { type: "Viral Hit", title: "[ERROR] GEMINI_API_KEY가 설정되지 않음", reason: \`환경변수 목록: \${Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('API')).join(', ')}\` },
+            { type: "Viral Hit", title: "[ERROR] GEMINI_API_KEY가 설정되지 않음", reason: "환경변수 목록: " + envKeys },
             { type: "Search-Optimized", title: "환경변수 누락", reason: "Vercel 대시보드에서 GEMINI_API_KEY를 확인하세요" },
             { type: "Creative Twist", title: "디버그", reason: "process.env.GEMINI_API_KEY is falsy" }
         ];
@@ -26,38 +26,41 @@ export async function generateVideoIdeas(
 
     try {
         const model = genAI.getGenerativeModel({
-            model: "gemini-3-flash-preview",
+            model: "gemini-2.0-flash",
             generationConfig: { responseMimeType: "application/json" }
         });
 
+        const relatedStr = relatedKeywords.slice(0, 10).join(', ') || "None provided";
+        const topVideosStr = topVideoTitles.slice(0, 10).join(', ') || "None provided";
+
         const prompt = `You are an expert YouTube Strategist. Your goal is to generate 3 high-performing video ideas by combining User Search Intent and Market Success Patterns.
-        
+
         KEYWORD: '${keyword}'
 
         DATA SOURCES:
-        1. User Search Intent (Naver Related Keywords): ${relatedKeywords.slice(0, 10).join(', ') || "None provided"}
+        1. User Search Intent (Naver Related Keywords): ${relatedStr}
            - Insight: This tells you what people are specifically curious about right now.
-        
-        2. Market Success Patterns (Top 10 Videos by Views): ${topVideoTitles.slice(0, 10).join(', ') || "None provided"}
+
+        2. Market Success Patterns (Top 10 Videos by Views): ${topVideosStr}
            - Insight: This tells you what formats (e.g., Mukbang, Vlog, Tutorial) are getting the most views.
 
         STRATEGY:
         1. Analyze the "Search Intent" to find the core need (e.g., "Recipe", "Price", "Review").
         2. Analyze the "Market Pattern" to find the winning format (e.g., "vs Comparison", "Shorts", "ASMR").
         3. Combine them to create a "Killer Title".
-        
+
         TASK:
         Generate 3 distinct video ideas based on this synthesis:
         1. Viral Hit (Focus on high click-through rate, curiosity gap).
         2. Search-Optimized (Focus on exact keyword match and solving specific problems).
         3. Creative Twist (A unique angle that stands out from the competition).
-        
+
         CRITICAL INSTRUCTION:
         - Output strictly in KOREAN (Hangul).
         - The title must be natural and catchy for a Korean audience.
-        
-        Output Constraint: Return ONLY a raw JSON array. Do not use Markdown formatting (\`\`\`json).
-        
+
+        Output Constraint: Return ONLY a raw JSON array. Do not use Markdown formatting.
+
         JSON Schema: [ { "type": "Viral Hit", "title": "한국어 제목", "reason": "이 제목이 왜 효과적인지 트렌드 기반으로 한국어로 설명" }, ... ]`;
 
         const result = await model.generateContent(prompt);
@@ -80,19 +83,21 @@ export async function generateVideoIdeas(
     } catch (error: unknown) {
         const errMsg = error instanceof Error ? error.message : String(error);
         console.error("Gemini Generation Error:", errMsg);
+        const keyPrefix = (process.env.GEMINI_API_KEY || '').slice(0, 10);
+        const geminiEnvKeys = Object.keys(process.env).filter(k => k.includes('GEMINI')).join(', ');
         return [
-            { type: "Viral Hit", title: `[ERROR] ${errMsg.slice(0, 80)}`, reason: `GEMINI_API_KEY exists: ${!!process.env.GEMINI_API_KEY}, key prefix: ${(process.env.GEMINI_API_KEY || '').slice(0, 10)}...` },
+            { type: "Viral Hit", title: "[ERROR] " + errMsg.slice(0, 80), reason: "GEMINI_API_KEY exists: " + (!!process.env.GEMINI_API_KEY) + ", key prefix: " + keyPrefix + "..." },
             { type: "Search-Optimized", title: "Gemini API 호출 실패", reason: errMsg.slice(0, 200) },
-            { type: "Creative Twist", title: "디버그 정보", reason: \`model: gemini-3-flash-preview, env keys: \${Object.keys(process.env).filter(k => k.includes('GEMINI')).join(', ')}\` }
+            { type: "Creative Twist", title: "디버그 정보", reason: "model: gemini-2.0-flash, env keys: " + geminiEnvKeys }
         ];
     }
 }
 
 function fallbackIdeas(keyword: string): VideoIdea[] {
     return [
-        { type: "Viral Hit", title: `Shocking Truth About ${keyword}`, reason: "High curiosity gap." },
-        { type: "Search-Optimized", title: `${keyword} Complete Guide 2024`, reason: "Matches search intent." },
-        { type: "Creative Twist", title: `I tried ${keyword} for 30 Days`, reason: "Personal challenge format." }
+        { type: "Viral Hit", title: "Shocking Truth About " + keyword, reason: "High curiosity gap." },
+        { type: "Search-Optimized", title: keyword + " Complete Guide 2024", reason: "Matches search intent." },
+        { type: "Creative Twist", title: "I tried " + keyword + " for 30 Days", reason: "Personal challenge format." }
     ];
 }
 
@@ -113,11 +118,10 @@ export async function analyzeVideoQuality(
 
     try {
         const model = genAI.getGenerativeModel({
-            model: "gemini-3-flash-preview",
+            model: "gemini-2.0-flash",
             generationConfig: { responseMimeType: "application/json" }
         });
 
-        // Truncate transcript to avoid token limits (approx 5-10 mins needed)
         const safeTranscript = transcript.slice(0, 15000);
 
         const prompt = `You are a strict YouTube Content Auditor. Analyze this video data against the keyword '${keyword}'.
@@ -125,14 +129,14 @@ export async function analyzeVideoQuality(
         Data:
         - Title: "${title}"
         - Transcript (First 5k chars): "${safeTranscript}..."
-        
+
         TASK:
         Evaluate 3 metrics (0-100 scale) and provide specific feedback in KOREAN.
-        
+
         1. Metadata Score (Title/Thumbnail potential): Is the title click-baity? Does it use strong power words?
         2. Script Score (Structure/Hook): Is the first 60s gripping? Is there logical structure?
         3. Relevance Score: Does the content actually deliver on the keyword's promise?
-        
+
         CRITICAL:
         - Be critical. Don't give high scores easily.
         - Feedback strings must be actionable advice in Korean.
@@ -155,7 +159,6 @@ export async function analyzeVideoQuality(
     } catch (error) {
         console.error("Gemini Diagnosis Error:", error);
         return null;
-
     }
 }
 
@@ -164,13 +167,13 @@ export async function extractBestKeyword(title: string, transcript: string): Pro
 
     try {
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-exp",
+            model: "gemini-2.0-flash",
             generationConfig: { responseMimeType: "text/plain" }
         });
 
         const prompt = `
         Analyze the following YouTube video data and identify the SINGLE most important "Search Keyword" (Core Topic).
-        
+
         Input:
         - Title: "${title}"
         - Transcript Start: "${transcript.slice(0, 5000)}..."
@@ -193,7 +196,6 @@ export async function extractBestKeyword(title: string, transcript: string): Pro
 
     } catch (error) {
         console.error("Gemini Keyword Extraction Error:", error);
-        return null; // Fallback to Title heuristic
+        return null;
     }
 }
-

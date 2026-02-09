@@ -4,13 +4,12 @@ import { VideoDiagnosticsResult } from "@/lib/video-diagnostics";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ScriptAnalysisViewer } from "./script-analysis-viewer";
 import { VolumeTrendChart, ScoreGaugeChart } from "./analytics-charts";
 import { calculateIntensity, getIntensityColor } from "@/lib/analytics";
-import { Users, Youtube, DollarSign, Target, Star, BrainCircuit } from "lucide-react";
+import { Youtube, DollarSign, Target, Star, BrainCircuit } from "lucide-react";
 
 export function VideoDiagnosisDashboard({ result }: { result: VideoDiagnosticsResult }) {
-    const { metadata, scriptAnalysis, trendAnalysis, extractedKeyword, dualCoreAnalysis, revenueEstimate } = result;
+    const { metadata, trendAnalysis, extractedKeyword, dualCoreAnalysis, revenueEstimate } = result;
 
     const intensity = calculateIntensity(trendAnalysis.keywordData.videoCount, trendAnalysis.keywordData.searchVolume);
     const trendData = trendAnalysis.keywordData.trend.map((volume, i) => {
@@ -155,7 +154,7 @@ export function VideoDiagnosisDashboard({ result }: { result: VideoDiagnosticsRe
 
                         <p className="mt-8 text-gray-600 max-w-2xl mx-auto">
                             이 주제의 <strong>검색량</strong>과 <strong>경쟁 강도</strong>를 종합적으로 분석한 점수입니다.
-                            <p>점수가 높을수록 '사람들이 많이 찾지만 경쟁은 적은' 좋은 주제입니다.</p>
+                            <p>점수가 높을수록 &apos;사람들이 많이 찾지만 경쟁은 적은&apos; 좋은 주제입니다.</p>
                         </p>
                     </div>
 
@@ -185,6 +184,7 @@ export function VideoDiagnosisDashboard({ result }: { result: VideoDiagnosticsRe
                         </h4>
                         <div className="grid grid-cols-1 gap-3">
                             {result.topVideos && result.topVideos.length > 0 ? (
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 result.topVideos.map((video: any, i: number) => (
                                     <div key={i} className="flex gap-4 p-3 bg-white rounded-lg border hover:shadow-md transition-shadow">
                                         <div className="w-32 h-20 bg-gray-200 rounded-md overflow-hidden flex-shrink-0 relative">

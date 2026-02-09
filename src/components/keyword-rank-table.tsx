@@ -4,7 +4,7 @@ import { useState } from "react";
 import { TrendingKeyword } from "@/lib/trendData";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp, Search, PlayCircle } from "lucide-react";
+import { Search, PlayCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 interface KeywordRankTableProps {

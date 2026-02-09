@@ -1,5 +1,3 @@
-import { MarketAnalysis } from '@/lib/algorithms';
-
 const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 const BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
@@ -58,6 +56,7 @@ export async function getVideosDetails(videoIds: string[]): Promise<YouTubeVideo
 
         if (!data.items) return [];
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return data.items.map((item: any) => ({
             id: item.id,
             title: item.snippet.title,
@@ -112,6 +111,7 @@ export async function searchVideos(query: string, maxResults: number = 20, order
 
         if (!data.items) return { results: [], totalResults: 0 };
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const results = data.items.map((item: any) => ({
             videoId: item.id.videoId,
             title: item.snippet.title,
@@ -145,6 +145,7 @@ export async function getChannelsDetails(channelIds: string[]): Promise<Map<stri
         if (!data.items) return new Map();
 
         const resultMap = new Map<string, YouTubeChannelDetails>();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data.items.forEach((item: any) => {
             resultMap.set(item.id, {
                 id: item.id,

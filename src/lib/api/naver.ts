@@ -69,6 +69,7 @@ export async function getKeywordVolume(query: string): Promise<{ total: number, 
         const keywordList = data.keywordList;
 
         // Find exact match
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const exact = keywordList.find((k: any) => k.relKeyword === query.replace(/\s+/g, '').toUpperCase() || k.relKeyword === query.toUpperCase()); // Naver returns no spaces often
 
         // If no exact match, try the first one or return null

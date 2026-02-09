@@ -31,6 +31,7 @@ async function fetchYouTubeTrendingTitles(count: number): Promise<string[]> {
         if (!data.items) return [];
 
         // Extract short keyword-like phrases from titles
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return data.items.map((item: any) => {
             const title: string = item.snippet.title;
             // Clean up: remove brackets, special chars, take first meaningful phrase

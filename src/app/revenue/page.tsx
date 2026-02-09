@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { estimateRevenue, RevenueEstimate } from "@/lib/algorithms";
 import { getVideoDetails, YouTubeVideoDetails } from "@/lib/api/youtube"; // Real API
-import { Search, Loader2, PlayCircle, Calendar, Clock, DollarSign, TrendingUp, AlertCircle } from "lucide-react";
+import { Search, PlayCircle, Calendar, Clock, DollarSign, TrendingUp } from "lucide-react";
 import { LottieLoader } from "@/components/ui/lottie-loader";
 import { motion, AnimatePresence } from "framer-motion";
 

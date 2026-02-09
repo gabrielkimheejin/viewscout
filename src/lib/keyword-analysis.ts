@@ -89,6 +89,7 @@ export async function getRealKeywordData(keyword: string) {
             monthlyVideoCount = 0;
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const relatedKeywords = naverStats?.keywordList?.map((k: any) => k.relKeyword) || [];
 
         const result = {

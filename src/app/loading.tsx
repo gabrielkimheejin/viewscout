@@ -1,5 +1,5 @@
 
-import { Loader2 } from "lucide-react";
+
 import { LottieLoader } from "@/components/ui/lottie-loader";
 
 export default function Loading() {

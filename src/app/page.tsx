@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { getTrendingKeywords } from "@/app/actions";
 import { TrendingKeyword } from "@/lib/trendData";
 

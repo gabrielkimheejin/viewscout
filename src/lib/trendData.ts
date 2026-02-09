@@ -45,6 +45,7 @@ async function fetchYouTubeTrendingTitles(count: number): Promise<string[]> {
         const data = await res.json();
         if (!data.items) return [];
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return data.items.map((item: any) => {
             const title: string = item.snippet.title;
             const cleaned = title

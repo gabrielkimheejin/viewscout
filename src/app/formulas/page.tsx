@@ -3,7 +3,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, BarChart2, Video, DollarSign, TrendingUp, Cpu } from "lucide-react";
+import { BarChart2, Video, DollarSign, TrendingUp, Cpu } from "lucide-react";
 
 export default function FormulasPage() {
     return (
@@ -85,7 +85,7 @@ export default function FormulasPage() {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="space-y-4 pt-2 text-gray-600">
-                        <p>영상 진단 v2.0은 <strong>"아무리 잘 만든 영상도 검색량이 없으면 망하고, 검색량이 많아도 영상이 지루하면 망한다"</strong>는 원칙 하에 설계되었습니다.</p>
+                        <p>영상 진단 v2.0은 <strong>&quot;아무리 잘 만든 영상도 검색량이 없으면 망하고, 검색량이 많아도 영상이 지루하면 망한다&quot;</strong>는 원칙 하에 설계되었습니다.</p>
                         <div className="bg-gray-100 p-3 rounded font-mono text-xs mb-4">
                             Total Score (100) = Topic Score (50) + Content Score (50)
                         </div>
@@ -94,7 +94,7 @@ export default function FormulasPage() {
                             <Card className="shadow-none border bg-gray-50/50">
                                 <CardHeader className="pb-2"><CardTitle className="text-sm">A. Topic Score (시장성, 50점)</CardTitle></CardHeader>
                                 <CardContent className="text-xs space-y-2">
-                                    <p className="font-bold text-gray-700">"사람들이 찾으면서도, 경쟁자가 적은가?"</p>
+                                    <p className="font-bold text-gray-700">&quot;사람들이 찾으면서도, 경쟁자가 적은가?&quot;</p>
                                     <ul className="list-disc pl-4 text-gray-500 space-y-1">
                                         <li><strong>Volume Score (25점):</strong> 월간 검색량 기반.<br />(검색량 1만 이상 시 만점)</li>
                                         <li><strong>Blue Ocean (25점):</strong> 경쟁 강도(Saturation)가 낮을수록 고득점.</li>
@@ -104,7 +104,7 @@ export default function FormulasPage() {
                             <Card className="shadow-none border bg-gray-50/50">
                                 <CardHeader className="pb-2"><CardTitle className="text-sm">B. Content Score (완성도, 50점)</CardTitle></CardHeader>
                                 <CardContent className="text-xs space-y-2">
-                                    <p className="font-bold text-gray-700">"클릭하고 싶고, 끝까지 볼 만한가?"</p>
+                                    <p className="font-bold text-gray-700">&quot;클릭하고 싶고, 끝까지 볼 만한가?&quot;</p>
                                     <ul className="list-disc pl-4 text-gray-500 space-y-1">
                                         <li><strong>메타데이터 (20점):</strong> 제목 길이, 파워 키워드(?, !, 충격 등), 썸네일 요소</li>
                                         <li><strong>스크립트 (20점):</strong> 초반 60초 훅(질문/위기/약속), 논리 구조, 가독성</li>
@@ -210,7 +210,7 @@ export default function FormulasPage() {
                             Performance Ratio = View Count / Subscriber Count
                         </div>
                         <p className="text-sm text-gray-500">
-                            * 비율이 <strong>5.0 (500%)</strong> 이상인 영상을 'Dark Horse'로 분류하여 추천합니다. 이는 알고리즘의 선택을 받은 영상일 확률이 매우 높습니다.
+                            * 비율이 <strong>5.0 (500%)</strong> 이상인 영상을 &apos;Dark Horse&apos;로 분류하여 추천합니다. 이는 알고리즘의 선택을 받은 영상일 확률이 매우 높습니다.
                         </p>
                     </AccordionContent>
                 </AccordionItem>

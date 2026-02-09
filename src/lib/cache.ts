@@ -8,6 +8,7 @@ const TTL_MS = 24 * 60 * 60 * 1000; // 24 Hours
 
 interface CacheEntry {
     timestamp: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any;
 }
 
@@ -47,6 +48,7 @@ function saveCache(store: CacheStore) {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getCachedData(keyword: string): Promise<any | null> {
     const store = loadCache();
     const entry = store[keyword];
@@ -63,6 +65,7 @@ export async function getCachedData(keyword: string): Promise<any | null> {
     return entry.data;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function setCachedData(keyword: string, data: any) {
     const store = loadCache();
     store[keyword] = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Legend, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell } from "recharts";
+import { Line, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Legend, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TrendData {
@@ -10,6 +10,7 @@ interface TrendData {
 }
 
 // Custom Dot for Min/Max annotations
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomDot = (props: any) => {
     const { cx, cy, payload, dataMax, dataMin } = props;
     if (payload.searchVolume === dataMax || payload.searchVolume === dataMin) {
@@ -168,7 +169,6 @@ export function MarketSaturationChart({ volume, saturation }: { volume: number, 
 export function ScoreGaugeChart({ score, max, label, color, insight }: { score: number, max: number, label: string, color: string, insight?: string }) {
     // Ensure score doesn't exceed max for percentage calc
     const validScore = Math.min(score, max);
-    const percentage = (validScore / max) * 100;
 
     // Data for Pie Chart: [Score, Remainder]
     // Remainder should be (Max - Score).
@@ -226,7 +226,8 @@ export function ScoreGaugeChart({ score, max, label, color, insight }: { score: 
     );
 }
 
-export function MicroTrendChart({ data, color, label }: { data: { day: string, value: number }[], color: string, label: string }) {
+export function MicroTrendChart({ data, color }: { data: { day: string, value: number }[], color: string, label?: string }) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
             return (

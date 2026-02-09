@@ -2,7 +2,6 @@
 
 import { AnalysisResult } from "@/lib/scriptAnalysis";
 import { Card, CardContent, CardTitle, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { AlertCircle, CheckCircle } from "lucide-react";
 
 export function ScriptAnalysisViewer({ result }: { result: AnalysisResult | null }) {

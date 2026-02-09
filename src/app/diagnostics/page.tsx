@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { analyzeVideoAction } from "./actions";
 import { VideoDiagnosticsResult } from "@/lib/video-diagnostics";
@@ -37,7 +37,7 @@ export default function DiagnosticsPage() {
         <div className="container mx-auto max-w-5xl py-10 px-4 space-y-8">
             <div className="text-center space-y-2">
                 <h1 className="text-3xl font-bold text-gray-900">AI 영상 정밀 진단 (Total Care)</h1>
-                <p className="text-muted-foreground">유튜브 링크만 넣으세요. '시장성(Trend)'과 '콘텐츠 품질(Script)'을 한번에 분석합니다.</p>
+                <p className="text-muted-foreground">유튜브 링크만 넣으세요. &apos;시장성(Trend)&apos;과 &apos;콘텐츠 품질(Script)&apos;을 한번에 분석합니다.</p>
             </div>
 
             {/* Input Section */}

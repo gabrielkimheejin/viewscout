@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { TrendTicker } from "@/components/trend-ticker";
 import { KeywordRankTable } from "@/components/keyword-rank-table";
-import { fetchDarkHorseVideos, TrendingKeyword, DarkHorseVideo } from "@/lib/trendData";
+import { TrendingKeyword } from "@/lib/trendData";
 import { getTrendingKeywords, getTopVideosForKeyword } from "@/app/actions";
 import { TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Flame, Activity, Zap, ArrowRight, User, Eye, Rocket } from "lucide-react";
+import { Flame, Activity, ArrowRight, User, Eye, Rocket } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image"; // Mock images use external URLs, so we might need img or configured Image
 
 const CATEGORIES = [
     { id: "all", label: "전체" },
@@ -29,13 +28,14 @@ export default function TrendsPage() {
     const [isWeekly, setIsWeekly] = useState(false); // Daily vs Weekly
 
     const [trendingKeywords, setTrendingKeywords] = useState<TrendingKeyword[]>([]);
-    const [darkHorses, setDarkHorses] = useState<DarkHorseVideo[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [selectedKeyword, setSelectedKeyword] = useState<TrendingKeyword | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedVideos, setSelectedVideos] = useState<any[]>([]);
     const [videosLoading, setVideosLoading] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [videoCache, setVideoCache] = useState<Record<string, any[]>>({}); // Cache for visited keywords
 
     // Client-side only time update to avoid hydration mismatch
@@ -57,9 +57,6 @@ export default function TrendsPage() {
                 setTrendingKeywords([]);
             }
 
-            // Fetch dark horse videos
-            const videos = await fetchDarkHorseVideos(activeCategory);
-            setDarkHorses(videos);
 
             setLoading(false);
             setCurrentTime(new Date().toLocaleTimeString('ko-KR'));

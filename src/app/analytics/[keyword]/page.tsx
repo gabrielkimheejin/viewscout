@@ -3,7 +3,6 @@ import { calculateIntensity, calculateOpportunity, getIntensityColor, getOceanLa
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { VolumeTrendChart, MicroTrendChart } from "@/components/analytics-charts";
 import { VideoList } from "@/components/video-list";
-import { UploadSimulator } from "@/components/upload-simulator";
 import { TopicRecommendation } from "@/components/topic-recommendation";
 import { Badge } from "@/components/ui/badge";
 import { BarChart3, Search, TrendingUp, Users } from "lucide-react";
@@ -18,9 +17,9 @@ export default async function AnalyticsPage({ params }: { params: { keyword: str
     const data = await getRealKeywordData(keyword);
 
     // Destructure cached extra fields
-    // @ts-ignore - Assuming getRealKeywordData returns these new fields (it does)
+    // @ts-expect-error getRealKeywordData returns these new fields but type not updated
     const last7DaysVideos = data.keywordData.last7DaysVideos || [];
-    // @ts-ignore
+    // @ts-expect-error monthlyVideoCount field exists but not in type definition
     const monthlyVideoCount = data.keywordData.monthlyVideoCount || 0;
 
     const intensity = calculateIntensity(data.keywordData.videoCount, data.keywordData.searchVolume);

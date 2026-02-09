@@ -40,6 +40,7 @@ export interface VideoDiagnosticsResult {
     dualCoreAnalysis: DualCoreResult;
     revenueEstimate: RevenueEstimate;
     isMockTranscript?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     topVideos?: any[]; // For displaying reference videos
 }
 
@@ -108,11 +109,11 @@ export async function processYoutubeUrl(url: string): Promise<VideoDiagnosticsRe
 
     // 4.3 Performance: Top 10 Videos Analysis
     const searchRes = await searchVideos(keyword, 10, 'relevance');
-    const competitorCount = searchRes.totalResults;
 
     // Calculate Top Video Avg Views & Niche Ratio
     let topAvgViews = 10000;
     let smallChannelRatio = 0.3; // Default
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let topVideosList: any[] = [];
 
     if (searchRes.results.length > 0) {
@@ -122,6 +123,7 @@ export async function processYoutubeUrl(url: string): Promise<VideoDiagnosticsRe
         const videoDetailsPromises = topVideoIds.map(id => getVideoDetails(id));
         const videoDetailsList = await Promise.all(videoDetailsPromises);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const validDetails = videoDetailsList.filter(v => v !== null) as any[];
         topVideosList = validDetails.slice(0, 5); // Store top 5 for UI
 
@@ -165,7 +167,6 @@ export async function processYoutubeUrl(url: string): Promise<VideoDiagnosticsRe
     );
 
     // 5.2 Viral Velocity
-    const uploadDate = new Date(videoData.publishedAt);
     const hoursSinceUpload = getStringDiffInHours(videoData.publishedAt);
     const viralVelocity = calculateViralVelocity(videoData.viewCount, hoursSinceUpload);
 
@@ -207,7 +208,7 @@ export async function processYoutubeUrl(url: string): Promise<VideoDiagnosticsRe
         } else {
             trendData = [0, 0, 0, 0, 0, 0];
         }
-    } catch (e) {
+    } catch {
         const mock = await getMockData(keyword);
         trendData = mock.keywordData.trend.slice(0, 6);
     }
@@ -243,6 +244,7 @@ export async function processYoutubeUrl(url: string): Promise<VideoDiagnosticsRe
         transcript,
         extractedKeyword: keyword,
         scriptAnalysis,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         trendAnalysis: trendAnalysis as any,
         dualCoreAnalysis,
         revenueEstimate,
